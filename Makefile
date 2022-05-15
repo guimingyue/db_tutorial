@@ -1,6 +1,9 @@
 db: db.c
 	gcc db.c -o db
 
+debug: db.c
+	gcc -g db.c -o db
+
 run: db
 	./db mydb.db
 
