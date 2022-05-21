@@ -7,7 +7,7 @@ If the internal node of our B+-tree is full, the process of out database will ex
 
 {% include image.html url="assets/images/splitting-internal-node.png" description="Example of splitting internal node" %}
 
-In this example, we add the key “8” to the tree. That causes the [TODO] leaf node to split. After the split , a new leaf node is created, and we shoud add key “8” to the internal node. we fix up the tree by doing the following:
+In this example, we add the key “8” to the tree. That causes the [TODO] leaf node to split. After the split , a new leaf node is created, and then the cell of key “8” should be added to the internal node, but the internal is full. we fix up the tree by splitting the internal node with the following steps:
 
 
 
