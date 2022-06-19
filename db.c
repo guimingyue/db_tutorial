@@ -86,6 +86,7 @@ typedef enum { NODE_INTERNAL, NODE_LEAF } NodeType;
 
 void internal_node_split_insert(Table* table, uint32_t parent_page_num, uint32_t insert_cell_key, uint32_t insert_page_num);
 
+void* get_page(Pager* pager, uint32_t page_num);
 /*
  * Common Node Header Layout
  */
@@ -228,6 +229,18 @@ uint32_t get_node_max_key(void* node) {
     case NODE_LEAF:
       return *leaf_node_key(node, *leaf_node_num_cells(node) - 1);
   }
+}
+
+uint32_t get_sub_tree_max_key(Pager *pager, void* node) {
+    uint32_t right_child_page_num;
+    switch (get_node_type(node)) {
+        case NODE_INTERNAL:
+            right_child_page_num = *internal_node_right_child(node);
+            void* right_child_node = get_page(pager, right_child_page_num);
+            return get_sub_tree_max_key(pager, right_child_node);
+        case NODE_LEAF:
+            return *leaf_node_key(node, *leaf_node_num_cells(node) - 1);
+    }
 }
 
 void print_constants() {
@@ -675,7 +688,7 @@ void create_new_root(Table* table, uint32_t right_child_page_num) {
   set_node_root(root, true);
   *internal_node_num_keys(root) = 1;
   *internal_node_child(root, 0) = left_child_page_num;
-  uint32_t left_child_max_key = get_node_max_key(left_child);
+  uint32_t left_child_max_key = get_sub_tree_max_key(table->pager, left_child);
   *internal_node_key(root, 0) = left_child_max_key;
   *internal_node_right_child(root) = right_child_page_num;
   *node_parent(left_child) = table->root_page_num;

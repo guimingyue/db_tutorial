@@ -6,8 +6,11 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+ 
+make: *** No rule to make target `all'.  Stop.
 
-# Make data base, printed on Thu May 19 22:52:50 2022
+
+# Make data base, printed on Mon Jun 20 00:04:38 2022
 
 # Variables
 
@@ -38,11 +41,13 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/b8/pqkjkpsj3vzgv8nfv59rhm_40000gn/T/vscode-ipc-61aa430a-a575-4620-a86c-57bb05e170a4.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/b8/pqkjkpsj3vzgv8nfv59rhm_40000gn/T/vscode-ipc-6bafff15-a8d5-4c96-b863-ee167ea4db3a.sock
 # environment
 VSCODE_CWD = /
 # environment
-PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/mingyue/.cargo/bin
+PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/mingyue/.cargo/bin
+# environment
+LaunchInstanceID = 2B4D8726-1E20-4F19-80CD-C4C151CD7360
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -50,7 +55,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.tRXvw19TTy/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.exTxZu3Mym/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -60,17 +65,17 @@ PWD = /Users/mingyue/github/db_tutorial
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
-VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /Users/mingyue
 # default
 MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/mingyue/Library/Application Support/Code/CachedData/ccbaa2d27e38e5afa3e5c21c1c7bef4657064247
+VSCODE_CODE_CACHE_PATH = /Users/mingyue/Library/Application Support/Code/CachedData/4af164ea3a06f701fe3e89a2bcbb421d2026b68f
 # environment
 LOGNAME = mingyue
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -100,7 +105,7 @@ TMPDIR = /var/folders/b8/pqkjkpsj3vzgv8nfv59rhm_40000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/mingyue/Library/Application Support/Code/1.62.3-main.sock
+VSCODE_IPC_HOOK = /Users/mingyue/Library/Application Support/Code/1.68.0-main.sock
 # makefile
 MAKEFLAGS = Rrqp
 # environment
@@ -108,7 +113,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.4454616.4454622
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.8517063.8517069
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -123,6 +128,8 @@ MAKEFILES :=
 <F = $(notdir $<)
 # environment
 LC_ALL = C
+# environment
+SECURITYSESSIONID = 186a4
 # automatic
 ^F = $(notdir $^)
 # default
@@ -134,9 +141,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 709
+VSCODE_PID = 391
 # variable set hash-table stats:
-# Load=62/1024=6%, Rehash=0, Collisions=1/86=1%
+# Load=64/1024=6%, Rehash=0, Collisions=1/88=1%
 
 # Pattern-specific Variable Values
 
@@ -144,9 +151,9 @@ VSCODE_PID = 709
 
 # Directories
 
-# . (device 16777220, inode 7872894): 23 files, no impossibilities.
+# . (device 16777220, inode 7872894): 24 files, no impossibilities.
 
-# 23 files, no impossibilities in 1 directories.
+# 24 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -251,8 +258,6 @@ db.c:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu May 19 22:52:50 2022
+# Finished Make data base on Mon Jun 20 00:04:38 2022
 
  
-make: *** No rule to make target `all'.  Stop.
-
