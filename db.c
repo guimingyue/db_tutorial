@@ -122,7 +122,7 @@ const uint32_t INTERNAL_NODE_CELL_SIZE =
 const uint32_t INTERNAL_NODE_MAX_CELLS = 3;
 
 const u_int32_t INTERNAL_NODE_RIGHT_SPLIT_COUNT = (INTERNAL_NODE_MAX_CELLS + 1) / 2;
-const u_int32_t INTERNAL_NODE_LEFT_SPLIT_COUNT = (INTERNAL_NODE_MAX_CELLS + 1) - INTERNAL_NODE_RIGHT_SPLIT_COUNT;
+const u_int32_t INTERNAL_NODE_LEFT_SPLIT_COUNT = (INTERNAL_NODE_MAX_CELLS + 1) - INTERNAL_NODE_RIGHT_SPLIT_COUNT - 1;
 
 /*
  * Leaf Node Header Layout
@@ -759,8 +759,9 @@ void internal_node_split_insert(Table* table, uint32_t parent_page_num, uint32_t
 
     // find cell num of insert_cell_key
     uint32_t cell_num = internal_node_find_child(old_node, insert_cell_key);
+    *internal_node_num_keys(new_node) = INTERNAL_NODE_RIGHT_SPLIT_COUNT;
     int32_t i = INTERNAL_NODE_MAX_CELLS;
-    for ( ; i >= INTERNAL_NODE_LEFT_SPLIT_COUNT; i--) {
+    for ( ; i >= INTERNAL_NODE_RIGHT_SPLIT_COUNT; i--) {
         uint32_t index_within_node = i % INTERNAL_NODE_RIGHT_SPLIT_COUNT;
         void* destination = internal_node_cell(new_node, index_within_node);
         if (i == cell_num) {
@@ -773,6 +774,13 @@ void internal_node_split_insert(Table* table, uint32_t parent_page_num, uint32_t
         }
     }
 
+    if (i == cell_num) {
+        *internal_node_right_child(old_node) = insert_page_num;
+    } else {
+        *internal_node_right_child(old_node) = *internal_node_child(old_node, i);
+    }
+    i--;
+    *internal_node_num_keys(old_node) = INTERNAL_NODE_LEFT_SPLIT_COUNT;
     for (; i >= 0; i--) {
         uint32_t index_within_node = i % INTERNAL_NODE_LEFT_SPLIT_COUNT;
         void* destination = internal_node_cell(old_node, index_within_node);
@@ -782,13 +790,9 @@ void internal_node_split_insert(Table* table, uint32_t parent_page_num, uint32_t
         } else if (i > cell_num) {
             memcpy(destination, internal_node_cell(old_node, i - 1), INTERNAL_NODE_CELL_SIZE);
         } else {
-            memcpy(destination, internal_node_cell(old_node, i), INTERNAL_NODE_CELL_SIZE);
+            continue;
         }
     }
-    *internal_node_right_child(old_node) = *internal_node_child(old_node, INTERNAL_NODE_LEFT_SPLIT_COUNT - 1);
-
-    *internal_node_num_keys(old_node) = INTERNAL_NODE_LEFT_SPLIT_COUNT - 1;
-    *internal_node_num_keys(new_node) = INTERNAL_NODE_RIGHT_SPLIT_COUNT;
 
     *node_parent(new_node) = parent_page_num;
 
