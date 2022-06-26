@@ -82,10 +82,130 @@ describe 'database' do
           "      - 36",
           "      - 37",
       ])
-    end
+  end
 
-  it 'allows printing out the structure of a 4-leaf-node btree' do
+  it 'splitting internal node with the max number of cells 3 by splitting the second leaf node' do
     array = [1, 2, 3, 4, 5, 6, 7, 8, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 22,21, 20, 19, 18, 17, 16, 14, 13, 12, 11, 10, 9, 15]
+    script = []
+    array.map do |i|
+        script.push("insert #{i} user#{i} person#{i}@example.com")
+    end
+    script.push(".btree", ".exit")
+    result = run_script(script)
+    expect(result[35...(result.length - 1)]).to match_array([
+      "db > Tree:",
+      "- internal (size 1)",
+      "  - internal (size 1)",
+      "    - leaf (size 7)",
+      "      - 1",
+      "      - 2",
+      "      - 3",
+      "      - 4",
+      "      - 5",
+      "      - 6",
+      "      - 7",
+      "    - key 7",
+      "    - leaf (size 7)",
+      "      - 8",
+      "      - 9",
+      "      - 10",
+      "      - 11",
+      "      - 12",
+      "      - 13",
+      "      - 14",
+      "  - key 14",
+      "  - internal (size 2)",
+      "    - leaf (size 7)",
+      "      - 15",
+      "      - 16",
+      "      - 17",
+      "      - 18",
+      "      - 19",
+      "      - 20",
+      "      - 21",
+      "    - key 21",
+      "    - leaf (size 7)",
+      "      - 22",
+      "      - 23",
+      "      - 24",
+      "      - 25",
+      "      - 26",
+      "      - 27",
+      "      - 28",
+      "    - key 28",
+      "    - leaf (size 7)",
+      "      - 29",
+      "      - 30",
+      "      - 31",
+      "      - 32",
+      "      - 33",
+      "      - 34",
+      "      - 35",
+    ])
+  end
+
+  it 'splitting internal node with the max number of cells 3 by splitting the third leaf node' do
+      array = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,23,24,25,26,27,28,29,30,31,32,33,34,35,16,17,18,19,20,22,21]
+      script = []
+      array.map do |i|
+          script.push("insert #{i} user#{i} person#{i}@example.com")
+      end
+      script.push(".btree", ".exit")
+      result = run_script(script)
+      expect(result[35...(result.length - 1)]).to match_array([
+        "db > Tree:",
+        "- internal (size 1)",
+        "  - internal (size 1)",
+        "    - leaf (size 7)",
+        "      - 1",
+        "      - 2",
+        "      - 3",
+        "      - 4",
+        "      - 5",
+        "      - 6",
+        "      - 7",
+        "    - key 7",
+        "    - leaf (size 7)",
+        "      - 8",
+        "      - 9",
+        "      - 10",
+        "      - 11",
+        "      - 12",
+        "      - 13",
+        "      - 14",
+        "  - key 14",
+        "  - internal (size 2)",
+        "    - leaf (size 7)",
+        "      - 15",
+        "      - 16",
+        "      - 17",
+        "      - 18",
+        "      - 19",
+        "      - 20",
+        "      - 21",
+        "    - key 21",
+        "    - leaf (size 7)",
+        "      - 22",
+        "      - 23",
+        "      - 24",
+        "      - 25",
+        "      - 26",
+        "      - 27",
+        "      - 28",
+        "    - key 28",
+        "    - leaf (size 7)",
+        "      - 29",
+        "      - 30",
+        "      - 31",
+        "      - 32",
+        "      - 33",
+        "      - 34",
+        "      - 35",
+      ])
+  end
+
+  it 'splitting internal node with the max number of cells 3 by splitting the rightmost leaf node' do
+    array = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35]
     script = []
     array.map do |i|
         script.push("insert #{i} user#{i} person#{i}@example.com")
