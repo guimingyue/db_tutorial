@@ -738,15 +738,13 @@ void internal_node_insert(Table* table, uint32_t parent_page_num,
 }
 
 void internal_node_split_insert(Table* table, uint32_t parent_page_num, uint32_t insert_cell_key, uint32_t insert_page_num) {
-
     uint32_t new_internal_page_num = get_unused_page_num(table->pager);
-    void* old_node = get_page(table->pager, parent_page_num);
     void* new_node = get_page(table->pager, new_internal_page_num);
     initialize_internal_node(new_node);
 
+    void* old_node = get_page(table->pager, parent_page_num);
     int32_t right_child_page_num = *internal_node_right_child(old_node);
     void* right_child = get_page(table->pager, right_child_page_num);
-
     // move right child
     int32_t cur_right_child_max_key = get_node_max_key(right_child);
     if (insert_cell_key > cur_right_child_max_key) {
