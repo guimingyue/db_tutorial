@@ -16,7 +16,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vscode/targets.log" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/targets.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_parts/part14.md" beforeDir="false" afterPath="$PROJECT_DIR$/_parts/part14.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.c" beforeDir="false" afterPath="$PROJECT_DIR$/db.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +157,8 @@
       <workItem from="1656210533828" duration="1427000" />
       <workItem from="1656227323283" duration="435000" />
       <workItem from="1656256601650" duration="277000" />
-      <workItem from="1656514858273" duration="1538000" />
+      <workItem from="1656514858273" duration="1575000" />
+      <workItem from="1656602618394" duration="704000" />
     </task>
     <servers />
   </component>

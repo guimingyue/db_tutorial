@@ -17,6 +17,8 @@ In this example, we add the key "8" to the tree. That causes the third leaf node
 Let's take an example of an internal node with the number of maximum keys of 3, and the root internal node is full with keys 7, 21, 28, so this node has four pointers. The result of the splitting of the leaf node is two leaf node with maximum key 14 and 21, so we should insert key key 14 into the parent internal node. The Splitting process just like this:
 {% include image.html url="assets/images/internal-node-split-demo.png" description="splitting internal node" %}
 
+As the part 10 did, we should update the key of the internal node after the splitting of child leaf node. So, in our example above, if the maximum size of internal node is greater than 3, the index of key 14 should be 1 (0-based) of the key array. So we update the key of index 1 with 14, which means replacing key 21 with key 14. As a result, the (left) pointer of key 14 points to the leaf node with maximum key of 14. Then add key 21 and page number to the parent internal node. But the maximum size of internal node is 3, so we should split the internal node.
+
 ## Splitting internal node 
 
 So, let's going on with constants for splitting internal node.
@@ -24,7 +26,7 @@ So, let's going on with constants for splitting internal node.
 + const u_int32_t INTERNAL_NODE_RIGHT_SPLIT_COUNT = (INTERNAL_NODE_MAX_CELLS + 1) / 2;
 + const u_int32_t INTERNAL_NODE_LEFT_SPLIT_COUNT = (INTERNAL_NODE_MAX_CELLS + 1) - INTERNAL_NODE_RIGHT_SPLIT_COUNT - 1;
 ```
- And then, replace our stub code with two new function calls: internal_node_split_insert() for splitting internal node. 
+ And then, replace our stub code with the new function calls: `internal_node_split_insert()` for splitting internal node. 
 
  ```diff
 if (original_num_keys >= INTERNAL_NODE_MAX_CELLS) {
@@ -35,23 +37,32 @@ if (original_num_keys >= INTERNAL_NODE_MAX_CELLS) {
 }
  ```
 
- In our new function, we create a new internal node and initialize this node. The last two parameters of our new function internal_node_split_insert is the key and page pointer, or page number.
+ The last two parameters of our new function `internal_node_split_insert` is the key and page pointer, or page number, to be added into parent internal node. In our new function, we first create a new internal node and initialize this node. 
 
  ```diff
 + void internal_node_split_insert(Table* table, uint32_t parent_page_num, uint32_t insert_cell_key, uint32_t insert_page_num) {
 +    uint32_t new_internal_page_num = get_unused_page_num(table->pager);
 +    void* new_node = get_page(table->pager, new_internal_page_num);
 +    initialize_internal_node(new_node);
-
  ```
-
-Firstly, if the maximum size of internal node is greater than 3, the index of key 14 should be 1 (0-based) of the key array. So we update the key of index 1 with 14, which means replacing key 21 with key 14. As a result, the (left) pointer of key 14 points to the leaf node with maximum key of 14. 
+Find the right child for the new internal node and set the value.
 
 ```diff
-
++ void* old_node = get_page(table->pager, parent_page_num);
++ int32_t right_child_page_num = *internal_node_right_child(old_node);
++ void* right_child = get_page(table->pager, right_child_page_num);
++ // move right child
++ int32_t cur_right_child_max_key = get_node_max_key(right_child);
++ if (insert_cell_key > cur_right_child_max_key) {
++    *internal_node_right_child(new_node) = insert_page_num;
++    insert_cell_key = cur_right_child_max_key;
++    insert_page_num = right_child_page_num;
++ } else {
++    *internal_node_right_child(new_node) = right_child_page_num;
++}
 ```
 
-Secondly, create a new internal node, and move half of the key and pointers to the new internal node.
+ Move half of the key and pointers to the new internal node.
     - if the new key to be added is larger than the maximum key of the internal node, the key 21 and the number of page key 21 blonging to to 
     - if the new key to be added is 
 
