@@ -1,5 +1,7 @@
 db
 _site/
 TODO
+.DS_Store
 .idea/
 .vscode/
+

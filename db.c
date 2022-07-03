@@ -741,6 +741,7 @@ void internal_node_split_insert(Table* table, uint32_t parent_page_num, uint32_t
     uint32_t new_internal_page_num = get_unused_page_num(table->pager);
     void* new_node = get_page(table->pager, new_internal_page_num);
     initialize_internal_node(new_node);
+    *node_parent(new_node) = parent_page_num;
 
     void* old_node = get_page(table->pager, parent_page_num);
     int32_t right_child_page_num = *internal_node_right_child(old_node);
@@ -792,14 +793,12 @@ void internal_node_split_insert(Table* table, uint32_t parent_page_num, uint32_t
         }
     }
 
-    *node_parent(new_node) = parent_page_num;
-
     bool node_root = is_node_root(old_node);
     if (node_root) {
         create_new_root(table, new_internal_page_num);
     } else {
-        uint32_t upper_parent_page_num = *node_parent(old_node);
-        internal_node_insert(table, upper_parent_page_num, parent_page_num);
+        printf("Need to implement insert new internal page to parent node\n");
+        exit(EXIT_FAILURE);
     }
 }
 
